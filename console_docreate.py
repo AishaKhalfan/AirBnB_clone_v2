@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import re
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -118,32 +119,70 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        print(args)
+#        print(args)
         argList = args.split()
-        print(argList)
+#        print(argList)
         clsName = argList[0]
-        print(clsName)
+#        print(clsName)
         if clsName not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
         paramList = argList[1:]
-        print(paramList)
+#        print(paramList)
 
         nqParams = [elem.replace('"','') for elem in paramList]
         fParams = [p.split('=') for p in nqParams]
-        print(fParams)
+#        print(fParams)
         
         for p in fParams:
             p[1] = p[1].replace('_',' ') 
-        print(fParams)
+#        print(fParams)
 
-        strParams = ', '.join(['='.join(p) for p in fParams])
-        print(strParams)
+        Pdict = {}
+        ignored = ('id', 'created_at', 'updated_at', '__class__')
 
-        new_instance = HBNBCommand.classes[clsName](strParams)
+#        rString = r'(?P<r_str>'(?:[^'|\']|[^"|\"])+|"\d*"'
+        rFloat = r'(?P<r_float>[-+]?\d+\.\d+)'
+        rInt = r'(?P<r_int>[-+]?\d+)'
+
+        p1Pattern = '({}|{})'.format(
+ #               rString,
+                rFloat,
+                rInt
+        )
+
+        for parameter in fParams:
+            key = parameter[0]
+#            print(parameter[1])
+#            print(type(parameter[1]))
+            rMatch = re.fullmatch(p1Pattern, parameter[1])
+            if (rMatch):
+#                print(rMatch)
+#                str_val = rMatch.group('r_str')
+                float_val = rMatch.group('r_float')
+                int_val = rMatch.group('r_int')
+#            if str_val is not None:
+#                value = str_val
+            if float_val is not None:
+                value = float(float_val)
+            elif int_val is not None:
+                value = int(int_val)
+            else:
+                value = parameter[1]
+
+            Pdict[key] = value
+#            print(type(value))
+
+        #strParams = ', '.join(['='.join(p) for p in fParams])
+        #print(strParams)
+
+        new_instance = HBNBCommand.classes[clsName]()
+        for key, value in Pdict.items():
+            if key not in ignored:
+                setattr(new_instance, key, value)
+        new_instance.save()
         storage.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
