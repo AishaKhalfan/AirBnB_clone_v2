@@ -141,7 +141,7 @@ class HBNBCommand(cmd.Cmd):
         Pdict = {}
         ignored = ('id', 'created_at', 'updated_at', '__class__')
 
-#        rString = r'(?P<r_str>'(?:[^'|\']|[^"|\"])+|"\d*"'
+        rString = r'(?P<r_str>'(?:[^'|\']|[^"|\"])+|"\d*"'
         rFloat = r'(?P<r_float>[-+]?\d+\.\d+)'
         rInt = r'(?P<r_int>[-+]?\d+)'
 
@@ -153,11 +153,11 @@ class HBNBCommand(cmd.Cmd):
 
         for parameter in fParams:
             key = parameter[0]
-#            print(parameter[1])
-#            print(type(parameter[1]))
+            print(parameter[1])
+            print(type(parameter[1]))
             rMatch = re.fullmatch(p1Pattern, parameter[1])
             if (rMatch):
-#                print(rMatch)
+                print(rMatch)
 #                str_val = rMatch.group('r_str')
                 float_val = rMatch.group('r_float')
                 int_val = rMatch.group('r_int')
@@ -171,7 +171,7 @@ class HBNBCommand(cmd.Cmd):
                 value = parameter[1]
 
             Pdict[key] = value
-#            print(type(value))
+            print(type(value))
 
         #strParams = ', '.join(['='.join(p) for p in fParams])
         #print(strParams)
