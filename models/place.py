@@ -52,7 +52,7 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
-        
+
         @property
         def reviews(self):
             ''' returns list of review instances with place_id
@@ -91,4 +91,3 @@ class Place(BaseModel, Base):
                 if isinstance(obj, Amenity):
                     if obj.id not in self.amenity_ids:
                         self.amenity_ids.append(obj.id)
-

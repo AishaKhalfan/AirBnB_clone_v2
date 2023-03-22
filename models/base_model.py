@@ -8,9 +8,10 @@ from sqlalchemy import Column, String, DateTime
 import models
 # from models import storage_type
 
-#mymetadata = MetaData()
-Base = declarative_base(metadata=mymetadata)
+# mymetadata = MetaData()
+Base = declarative_base()
 storage_type = getenv('HBNB_TYPE_STORAGE')
+
 
 class BaseModel:
     """A base class for all hbnb models"""
@@ -65,5 +66,5 @@ class BaseModel:
 
     def delete(self):
         """deletes the current instance from the dictionary"""
-        #from models import storage
+        # from models import storage
         models.storage.delete(self)
