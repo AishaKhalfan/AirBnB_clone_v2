@@ -2,7 +2,17 @@
 """DB STORAGE MANAGEMENT"""
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
+from models.amenity import Amenity
+from models.base_model import Base
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 import os
+
+if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    from models.place import place_amenity
 
 
 class DBStorage:
@@ -78,13 +88,6 @@ class DBStorage:
         """
         create all tables, create current db session
         """
-        from models.place import Place
-        from models.review import Review
-        from models.state import State
-        from models.user import User
-        from models.amenity import Amenity
-        from models.base_model import Base
-        from models.city import City
 
         Base.metadata.create_all(self.__engine)
         session_maker = sessionmaker(bind=self.__engine, expire_on_commit=False)
