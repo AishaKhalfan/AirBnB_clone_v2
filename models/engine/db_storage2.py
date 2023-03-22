@@ -2,11 +2,25 @@
 """DB STORAGE MANAGEMENT"""
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
+from models.amenity import Amenity
+from models.base_model import Base
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 import os
+
+if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+    from models.place import place_amenity
 
 
 class DBStorage:
-    """A class defining methods and attributes for the database"""
+    """A class defining methods and attributes for the database
+    Attributes:
+        __engine (sqlalchemy.Engine): The working SQLAlchemy engine.
+        __session (sqlalchemy.Session): The working SQLAlchemy session.
+    """
 
     __engine = None
     __session = None
@@ -27,38 +41,29 @@ class DBStorage:
 
     def all(self, cls=None):
         """
-        query on current session all objects or of cls
-        return a dictionary
+        Query on current DB session all objects of the given cls
+        If cls is None, queries all types of objects
+        Return:
+            A Dict of queried classes in the format <class name>.<obj id> = obj.
         """
-        classes = {"User": User, "State": State, "City": City,
-           "Amenity": Amenity, "Place": Place, "Review": Review}
-
-        dict = {}
         if cls is None:
-            for c in classes.values():
-                objects = self.__session.query(c).all()
-                for o in objects:
-                    key = o.__class__.__name__ + '.' + o.id
-                    dict[key] = o
+            objs = self.__session.query(State).all()
+            objs.extend(self.__session.query(City).all())
+            objs.extend(self.__session.query(User).all())
+            objs.extend(self.__session.query(Place).all())
+            objs.extend(self.__session.query(Review).all())
+            objs.extend(self.__session.query(Amenity).all())
         else:
-            objects = self.__session.query(cls).all()
-            for o in objects:
-                key = o.__class__.__name__ + '.' + o.id
-                dict[key] = o
-        return dict
+            if type(cls) == str:
+                cls = eval(cls)
+            objs = self.__session.query(cls)
+        return {"{}.{}".format(type(o).__name__, o.id): o for o in objs} 
 
     def new(self, obj):
         """
-        adds obj to current db session
+        Adds obj to current db session
         """
-        if obj is not None:
-            try:
-                self.__session.add(obj)
-                self.__session.flush()
-                self.__session.refresh(obj)
-            except Exception as e:
-                self.__session.rollback()
-                raise e
+        self.__session.add(obj)
 
     def save(self):
         """
@@ -71,27 +76,20 @@ class DBStorage:
         delete obj from current db session
         """
         if obj is not None:
-            self.__session.query(type(obj)).filter(
-                    type(obj).id == obj.id).delete()
+            self.__session.delete(obj)
 
     def reload(self):
         """
         create all tables, create current db session
         """
-        from models.place import Place
-        from models.review import Review
-        from models.state import State
-        from models.user import User
-        from models.amenity import Amenity
-        from models.base_model import Base
-        from models.city import City
 
         Base.metadata.create_all(self.__engine)
         session_maker = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        self.__session = scoped_session(session_maker)()
+        Session = scoped_session(session_maker)
+        self.__session= Session()
 
-    def close(self)
+    def close(self):
         """
-        closes the session
+        closes the Running SQLAlchemy session
         """
         self.__session.close()

@@ -1,10 +1,11 @@
 #!/usr/bin/python3
-""" Console Module """
+""" Define the HBNBConsole Module """
 import cmd
 import sys
 import re
 import os
 import uuid
+from models import storage
 from datetime import datetime
 from models.base_model import BaseModel
 from models.__init__ import storage

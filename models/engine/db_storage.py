@@ -16,7 +16,11 @@ if os.getenv('HBNB_TYPE_STORAGE') == 'db':
 
 
 class DBStorage:
-    """A class defining methods and attributes for the database"""
+    """A class defining methods and attributes for the database
+    Attributes:
+        __engine (sqlalchemy.Engine): The working SQLAlchemy engine.
+        __session (sqlalchemy.Session): The working SQLAlchemy session.
+    """
 
     __engine = None
     __session = None
@@ -37,8 +41,10 @@ class DBStorage:
 
     def all(self, cls=None):
         """
-        query on current session all objects or of cls
-        return a dictionary
+        Query on current DB session all objects of the given cls
+        If cls is None, queries all types of objects
+        Return:
+            A Dict of queried classes in the format <class name>.<obj id> = obj.
         """
         classes = {"User": User, "State": State, "City": City,
            "Amenity": Amenity, "Place": Place, "Review": Review}
@@ -59,7 +65,7 @@ class DBStorage:
 
     def new(self, obj):
         """
-        adds obj to current db session
+        Adds obj to current db session
         """
         if obj is not None:
             try:
