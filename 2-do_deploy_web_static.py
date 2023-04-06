@@ -5,7 +5,7 @@ and decompress it
 import os.path
 from fabric.api import env, put, run
 
-env.hosts = ["34.73.127.101", "18.205.59.182"]
+env.hosts = ["18.207.234.171", "35.153.226.243"]
 
 
 def do_deploy(archive_path):
