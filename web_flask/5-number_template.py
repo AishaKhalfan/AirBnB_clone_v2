@@ -33,7 +33,7 @@ def c(text):
     """Displays'C' followed by <text> value.
     Replaces any underscores in <text> with slashes.
     """
-    return "C" + text.replace('_', ' ')
+    return "C " + text.replace('_', ' ')
 
 
 @app.route("/python", strict_slashes=False)
@@ -42,7 +42,7 @@ def python(text="is cool"):
     """Displays'Python' followed by <text> value.
     Replaces any underscores in <text> with slashes.
     """
-    return "Python" + text.replace('_', ' ')
+    return "Python " + text.replace('_', ' ')
 
 
 @app.route("/number/<int:n>", strict_slashes=False)
@@ -50,7 +50,7 @@ def number(n):
     """
     Displays “n is a number” only if n is an integer
     """
-    return "{} a number".format(n)
+    return "{} is a number".format(n)
 
 
 @app.route('/number_template/<n>', strict_slashes=False)
