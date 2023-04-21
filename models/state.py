@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """state Module for HBNB project """
+import models
 from models.base_model import BaseModel, Base
 from models import storage_type
 from models.city import City
