@@ -17,14 +17,14 @@ def hello_hbnb():
 
 @app.route("/hbnb", strict_slashes=False)
 def hbnb():
-    """Displays'HBNB'"""
+    """Displays HBNB"""
     return "HBNB"
 
 
 @app.route("/c/<text>", strict_slashes=False)
 def c(text):
     """Displays'C' followed by <text> value."""
-    return f"C {text.replace('_', ' ')}"
+    return f'C {text.replace("_", " ")}'
 
 
 if __name__ == "__main__":
