@@ -35,7 +35,7 @@ def c(text):
     """Displays'C' followed by <text> value.
     Replaces any underscores in <text> with slashes.
     """
-    return f"C {text.replace('_', ' ')}"
+    return "C" + text.replace('_', ' ')
 
 
 @app.route("/python", strict_slashes=False)
@@ -44,8 +44,7 @@ def python(text="is cool"):
     """Displays'Python' followed by <text> value.
     Replaces any underscores in <text> with slashes.
     """
-    text = text.replace("_", " ")
-    return "Python {}".format(text)
+    return "Python" + text.replace("_", " ")
 
 
 @app.route("/number/<int:n>", strict_slashes=False)
