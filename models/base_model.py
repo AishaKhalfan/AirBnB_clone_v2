@@ -7,10 +7,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime
 import models
 from models import storage_type
-#from sqlalchemy.orm import registry
+# from sqlalchemy.orm import registry
 
-#mapper_registry = registry()
-#Base = mapper_registry.generate_base()
+# mapper_registry = registry()
+# Base = mapper_registry.generate_base()
 Base = declarative_base()
 storage_type = getenv('HBNB_TYPE_STORAGE')
 
