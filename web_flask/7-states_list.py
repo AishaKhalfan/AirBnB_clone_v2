@@ -6,7 +6,7 @@
 """
 from models import storage
 from flask import Flask, render_template
-from models.state import state
+#from models.state import state
 
 
 app = Flask(__name__)
