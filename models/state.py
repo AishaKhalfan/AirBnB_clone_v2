@@ -2,10 +2,11 @@
 """state Module for HBNB project """
 import models
 from models.base_model import BaseModel, Base
-from models import storage_type
+from models import storage, storage_type
 from models.city import City
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
+fromos import getenv
 
 
 class State(BaseModel, Base):
@@ -19,12 +20,13 @@ class State(BaseModel, Base):
     else:
         name = ''
 
+        if getenv("HBNB_TYPE_STORAGE") != "db":
         @property
         def cities(self):
             '''returns the list of City instances with state_id
                 equals the current State.id
             '''
-            from models import storage
+            #from models import storage
             related_cities = []
             cities = storage.all(City)
             for city in cities.values():
