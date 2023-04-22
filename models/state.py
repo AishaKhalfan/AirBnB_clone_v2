@@ -20,17 +20,17 @@ class State(BaseModel, Base):
     else:
         name = ''
 
-        if getenv("HBNB_TYPE_STORAGE") != "db":
+        #if getenv("HBNB_TYPE_STORAGE") != "db":
 
-            @property
-            def cities(self):
-                '''returns the list of City instances with state_id
-                    equals the current State.id
-                '''
-                from models import storage
-                related_cities = []
-                cities = storage.all(City)
-                for city in cities.values():
-                    if city.state_id == self.id:
-                        related_cities.append(city)
-                return related_cities
+        @property
+        def cities(self):
+            '''returns the list of City instances with state_id
+            equals the current State.id
+            '''
+            from models import storage
+            related_cities = []
+            cities = storage.all(City)
+            for city in cities.values():
+                if city.state_id == self.id:
+                    related_cities.append(city)
+            return related_cities
