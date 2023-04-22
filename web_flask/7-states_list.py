@@ -5,8 +5,9 @@
          /states_list: HTML page with a list of all state objects in DBStorage.
 """
 from models import storage
-from flask import Flask, render_template
-from models.state import state
+from flask import Flask
+from flask import render_template
+
 
 app = Flask(__name__)
 
@@ -16,9 +17,8 @@ def states_list():
     """Displays an HTML page with a list of all State objects in DBStorage.
         States are sorted by name
     """
-    states = storage.all(State).values()
-    sorted_states = sorted(states, key=lambda state: state.name)
-    return render_template('states_list.html', states=sorted_states)
+    states = storage.all('State')
+    return render_template('states_list.html', states=states)
 
 
 @app.teardown_appcontext
@@ -28,5 +28,5 @@ def teardown_db(exception=None):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
