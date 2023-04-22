@@ -50,12 +50,13 @@ class BaseModel:
     def save(self):
         """Updates updated_at with current time when instance is changed"""
         from models import storage
-        self.updated_at = datetime.utcnow()
+        #self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now()
         models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
-        """Convert instance into dict format"""
+        """Convert instance into dict format
         dictionary = {}
         dictionary.update(self.__dict__)
         dictionary.update({'__class__':
@@ -64,7 +65,19 @@ class BaseModel:
         dictionary['updated_at'] = self.updated_at.isoformat()
         if (dictionary["_sa_instance_state"]):
             del dictionary["_sa_instance_state"]
-        return dictionary
+        return dictionary"""
+        dictionary = self.__dict__.copy()
+        dictionary['__class__'] = self.__class__.__name__
+        if 'created_at' in dictionary and dictionary['created_at'] is not None:
+            dictionary['created_at'] = dictionary['created_at'].isoformat()
+        else:
+            dictionary['created_at'] = datetime.now().isoformat()
+        if 'updated_at' in dictionary and dictionary['updated_at'] is not None:
+            dictionary['updated_at'] = dictionary['updated_at'].isoformat()
+        else:
+            dictionary['updated_at'] = datetime.now().isoformat()
+        dictionary.pop('_sa_instance_state', None)
+        return dictionary 
 
     def delete(self):
         """deletes the current instance from the dictionary"""
