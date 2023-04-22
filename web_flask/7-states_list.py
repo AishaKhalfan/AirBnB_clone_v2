@@ -5,8 +5,8 @@
          /states_list: HTML page with a list of all state objects in DBStorage.
 """
 from models import storage
-from flask import Flask
-from flask import render_template
+from flask import Flask, render_template
+from models.state import state
 
 
 app = Flask(__name__)
