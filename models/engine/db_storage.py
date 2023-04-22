@@ -3,7 +3,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.amenity import Amenity
-from models.base_model import Base, Base_model
+from models.base_model import Base, BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
