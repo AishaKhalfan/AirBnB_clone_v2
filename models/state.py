@@ -6,7 +6,7 @@ from models import storage, storage_type
 from models.city import City
 from sqlalchemy import Column, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-fromos import getenv
+from os import getenv
 
 
 class State(BaseModel, Base):
@@ -20,7 +20,7 @@ class State(BaseModel, Base):
     else:
         name = ''
 
-        #if getenv("HBNB_TYPE_STORAGE") != "db":
+        if getenv("HBNB_TYPE_STORAGE") != "db":
         @property
         def cities(self):
             '''returns the list of City instances with state_id
