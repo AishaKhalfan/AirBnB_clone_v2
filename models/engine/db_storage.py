@@ -34,8 +34,8 @@ class DBStorage:
         environ = os.getenv('HBNB_ENV')
 
         self.__engine = create_engine(
-                'mysql+mysqldb://{}:{}@{}/{}'.format(
-                    user, passwd, host, database), pool_pre_ping=True)
+            'mysql+mysqldb://{}:{}@{}/{}'.format(
+                user, passwd, host, database), pool_pre_ping=True)
         if environ == 'test':
             Base.metadata.drop_all(self.__engine)
 
@@ -47,7 +47,7 @@ class DBStorage:
             A Dict of queried classes in the format <class name>.<obj id> = obj.
         """
         classes = {"User": User, "State": State, "City": City,
-           "Amenity": Amenity, "Place": Place, "Review": Review}
+                   "Amenity": Amenity, "Place": Place, "Review": Review}
 
         dict = {}
         if cls is None:
@@ -88,7 +88,7 @@ class DBStorage:
         """
         if obj is not None:
             self.__session.query(type(obj)).filter(
-                    type(obj).id == obj.id).delete()
+                type(obj).id == obj.id).delete()
 
     def reload(self):
         """
@@ -96,7 +96,8 @@ class DBStorage:
         """
        # mapper_registry.metadata.create_all(self.__engine)
         Base.metadata.create_all(self.__engine)
-        session_maker = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_maker = sessionmaker(
+            bind=self.__engine, expire_on_commit=False)
         self.__session = scoped_session(session_maker)()
 
     def close(self):
