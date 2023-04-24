@@ -34,8 +34,8 @@ class DBStorage:
         environ = os.getenv('HBNB_ENV')
 
         self.__engine = create_engine(
-                'mysql+mysqldb://{}:{}@{}/{}'.format(
-                    user, passwd, host, database), pool_pre_ping=True)
+            'mysql+mysqldb://{}:{}@{}/{}'.format(
+                user, passwd, host, database), pool_pre_ping=True)
         if environ == 'test':
             Base.metadata.drop_all(self.__engine)
 
@@ -57,7 +57,7 @@ class DBStorage:
             if type(cls) == str:
                 cls = eval(cls)
             objs = self.__session.query(cls)
-        return {"{}.{}".format(type(o).__name__, o.id): o for o in objs} 
+        return {"{}.{}".format(type(o).__name__, o.id): o for o in objs}
 
     def new(self, obj):
         """
@@ -84,9 +84,10 @@ class DBStorage:
         """
 
         Base.metadata.create_all(self.__engine)
-        session_maker = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_maker = sessionmaker(
+            bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_maker)
-        self.__session= Session()
+        self.__session = Session()
 
     def close(self):
         """
