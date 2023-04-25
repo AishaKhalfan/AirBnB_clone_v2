@@ -316,13 +316,13 @@ Repo:
 ## Task 7. Improve engines
 Before using Flask to display our HBNB data, you will need to update some part of our engine:
 
-Update ```FileStorage```: ```(models/engine/file_storage.py)```
+Update FileStorage (models/engine/file_storage.py)
 
-	- Add a public method ```def close(self):```: call ```reload()``` method for deserializing the JSON file to objects
+	- Add a public method def close(self):: call reload() method for deserializing the JSON file to objects
 
-Update ```DBStorage```: ```(models/engine/db_storage.py)```
+Update DBStorage: (models/engine/db_storage.py)
 
-	- Add a public method ```def close(self):```: call ```remove()``` method on the private session attribute (self.__session) tips or close() on the class Session tips
+	- Add a public method def close(self):: call remove() method on the private session attribute (self.__session) tips or close() on the class Session tips
 Update ```State```: ```(models/state.py)``` - If it’s not already present
 
 	- If your storage engine is not ```DBStorage```, add a public getter method ```cities``` to return the list of ```City``` objects from storage linked to the current State
@@ -393,7 +393,7 @@ all_states = storage.all(State)
 for state_id, state in all_states.items():
     for city in state.cities:
         print("Find the city {} in the state {}".format(city, state))
-
+```
 khalfan@ubuntu:~/AirBnB_v2$ 
 khalfan@ubuntu:~/AirBnB_v2$ rm file.json ; HBNB_TYPE_STORAGE=fs ./main.py
 New state: [State] (5b8f1d55-e49c-44dd-ba6f-a3cf8489ae45) {'name': 'California', 'id': '5b8f1d55-e49c-44dd-ba6f-a3cf8489ae45', 'updated_at': datetime.datetime(2017, 12, 11, 19, 27, 52, 509954), 'created_at': datetime.datetime(2017, 12, 11, 19, 27, 52, 509950)}
@@ -852,7 +852,8 @@ Repo:
 - GitHub repository: AirBnB_clone_v2
 - File: web_flask/10-hbnb_filters.py, web_flask/templates/10-hbnb_filters.html, web_flask/static/
 
-## Task 2. HBNB is alive!
+1
+## Task 12. HBNB is alive!
 - Your web application must be listening on 0.0.0.0, port 5000
 - You must use storage for fetching data from the storage engine (FileStorage or DBStorage) => from models import storage and storage.all(...)
 - To load all cities of a State:
@@ -884,4 +885,5 @@ khalfan@ubuntu:~/AirBnB_v2$ cat 100-dump.sql | mysql -uroot -p
 Enter password: 
 khalfan@ubuntu:~/AirBnB_v2$ HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db python3 -m web_flask.100-hbnb
 * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
-....```
+....
+```
