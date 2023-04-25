@@ -35,7 +35,7 @@ def python(text="is cool"):
     """Displays'Python' followed by <text> value.
     Replaces any underscores in <text> with slashes.
     """
-    return "Python" + text.replace('_', ' ')
+    return "Python " + text.replace('_', ' ')
 
 
 if __name__ == "__main__":
